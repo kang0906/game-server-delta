@@ -29,6 +29,9 @@ public class User {
     private LocalDateTime joinDate;
     private LocalDateTime lastAccessDate;
 
+    @Embedded
+    private UserGameInfo userGameInfo = new UserGameInfo(1000);
+
 
     public User(String email, Long kakaoId, String username, String password) {
         this.email = email;
