@@ -6,6 +6,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Random;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -24,6 +26,6 @@ public class Unit {
     private int hp;
     private int attackSpeed;
     private int moveSpeed;
-    private String UnitType;    // todo : enum 으로 교체
-    private String Deploy;      // todo : enum 으로 교체
+    private UnitType unitType;
+    private Deploy deploy;
 }
