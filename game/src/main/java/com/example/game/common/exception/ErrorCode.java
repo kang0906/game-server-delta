@@ -14,6 +14,7 @@ public enum ErrorCode {
     CANT_EDIT(HttpStatus.BAD_REQUEST, "CUSTOMER_GROUP_01","수정 할 권한이 없습니다."),
     DESTINATION_NOT_EMPTY(HttpStatus.BAD_REQUEST, "Destination Field is Not Empty","목적지가 비어있지 않습니다."),
     NOT_ENOUGH_ITEM(HttpStatus.BAD_REQUEST,"Not enough item","아이템이 충분하지 않습니다."),
+    NOT_ENOUGH_MONEY(HttpStatus.BAD_REQUEST,"Not enough money","잔액이 충분하지 않습니다."),
     CAN_NOT_USE_NEGATIVE_NUMBER(HttpStatus.BAD_REQUEST,"can not user negative number","0 이상만 사용할 수 있습니다."),
     NOT_VALID_USERNAME(HttpStatus.BAD_REQUEST,"CUSTOMER_GROUP_04","이름이 유효하지 않습니다."),
     OUT_OF_RANGE(HttpStatus.BAD_REQUEST,"out of range","범위를 초과했습니다."),

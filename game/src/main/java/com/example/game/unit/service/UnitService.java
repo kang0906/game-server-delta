@@ -1,0 +1,34 @@
+package com.example.game.unit.service;
+
+import com.example.game.common.exception.GlobalException;
+import com.example.game.unit.entity.Unit;
+import com.example.game.unit.repository.UnitRepository;
+import com.example.game.user.entity.User;
+import com.example.game.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import static com.example.game.common.exception.ErrorCode.DATA_NOT_FOUND;
+
+@Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
+@Slf4j
+public class UnitService {
+
+    private final UnitRepository unitRepository;
+    private final UserRepository userRepository;
+
+    @Transactional
+    public void addUnit(User user) {
+
+        user = userRepository.findById(user.getUserId())
+                .orElseThrow(() -> new GlobalException(DATA_NOT_FOUND));
+
+        user.getUserGameInfo().useMoney(500);   // 유닛 구매 금액은 외부에서 주입받아서 사용하도록 수정
+
+        unitRepository.save(new Unit(user));
+    }
+}

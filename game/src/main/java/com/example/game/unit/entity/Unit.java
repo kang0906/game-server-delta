@@ -26,6 +26,21 @@ public class Unit {
     private int hp;
     private int attackSpeed;
     private int moveSpeed;
+    @Enumerated(EnumType.STRING)
     private UnitType unitType;
+    @Enumerated(EnumType.STRING)
     private Deploy deploy;
+
+    public Unit(User user) {
+        UnitType unitType = UnitType.getRandomUnitType();
+
+        this.user = user;
+        this.ap = unitType.getAp();
+        this.def = unitType.getAp();
+        this.hp = unitType.getHp();
+        this.attackSpeed = unitType.getAttackSpeed();
+        this.moveSpeed = unitType.getMoveSpeed();
+        this.unitType = unitType;
+        this.deploy = null;
+    }
 }

@@ -1,7 +1,10 @@
 package com.example.game.unit.entity;
 
+import lombok.Getter;
+
 import java.util.Random;
 
+@Getter
 public enum UnitType {
 
     INFANTRY("infantry", 30, 10, 100, 5, 15),
