@@ -42,6 +42,11 @@ public class User {
         this.lastAccessDate = LocalDateTime.now();
     }
 
+    public User(String email, Long kakaoId, String username, String password, UserGameInfo userGameInfo) {
+        this(email, kakaoId, username, password);
+        this.userGameInfo = userGameInfo;
+    }
+
     public void setLastAccessDate() {
         this.lastAccessDate = LocalDateTime.now();
     }

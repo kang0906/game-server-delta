@@ -27,7 +27,7 @@ public class UnitService {
         user = userRepository.findById(user.getUserId())
                 .orElseThrow(() -> new GlobalException(DATA_NOT_FOUND));
 
-        user.getUserGameInfo().useMoney(500);   // 유닛 구매 금액은 외부에서 주입받아서 사용하도록 수정
+        user.getUserGameInfo().useMoney(500);   // todo : 유닛 구매 금액은 외부에서 주입받아서 사용하도록 수정
 
         unitRepository.save(new Unit(user));
     }
