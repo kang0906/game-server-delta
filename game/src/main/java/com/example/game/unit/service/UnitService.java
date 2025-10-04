@@ -1,6 +1,9 @@
 package com.example.game.unit.service;
 
+import com.example.game.common.dto.ResponseDto;
 import com.example.game.common.exception.GlobalException;
+import com.example.game.unit.dto.UnitDto;
+import com.example.game.unit.dto.UnitListResponseDto;
 import com.example.game.unit.entity.Unit;
 import com.example.game.unit.repository.UnitRepository;
 import com.example.game.user.entity.User;
@@ -9,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static com.example.game.common.exception.ErrorCode.DATA_NOT_FOUND;
 
@@ -30,5 +35,11 @@ public class UnitService {
         user.getUserGameInfo().useMoney(500);   // todo : 유닛 구매 금액은 외부에서 주입받아서 사용하도록 수정
 
         unitRepository.save(new Unit(user));
+    }
+
+    public UnitListResponseDto getUnitList(User user) {
+        List<Unit> allByUser = unitRepository.findAllByUser(user);
+
+        return new UnitListResponseDto(allByUser.stream().map(UnitDto::new).toList());
     }
 }
