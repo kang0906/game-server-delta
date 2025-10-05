@@ -2,6 +2,8 @@ package com.example.game.unit.service;
 
 import com.example.game.common.exception.ErrorCode;
 import com.example.game.common.exception.GlobalException;
+import com.example.game.unit.dto.UnitListResponseDto;
+import com.example.game.unit.entity.UnitType;
 import com.example.game.unit.repository.UnitRepository;
 import com.example.game.user.entity.User;
 import com.example.game.user.entity.UserGameInfo;
@@ -62,7 +64,34 @@ class UnitServiceTest {
                 .isInstanceOf(GlobalException.class)
                 .hasMessage(ErrorCode.NOT_ENOUGH_MONEY.getMessage());
     }
-    
+
+    @DisplayName("유닛 목록을 정상적으로 조회한다.")
+    @Test
+    void getUnitListTest() {
+        // given
+        User user = userRepository.save(new User("testUser", 1L, "testUser", "testUser", new UserGameInfo(1500)));
+        unitService.addUnit(user);
+        unitService.addUnit(user);
+        unitService.addUnit(user);
+
+        // when
+        UnitListResponseDto unitList = unitService.getUnitList(user);
+
+        // then
+        Assertions.assertThat(unitList).isNotNull();
+        Assertions.assertThat(unitList.getUnitList())
+                .hasSize(3)
+                .extracting("userId", "deploy")
+                .containsOnly(
+                        tuple(user.getUserId(), null)
+                );
+
+        Assertions.assertThat(unitList.getUnitList())
+                .extracting("unitType")
+                .containsAnyOf(
+                        UnitType.values()
+                );
+    }
     
 
 }
