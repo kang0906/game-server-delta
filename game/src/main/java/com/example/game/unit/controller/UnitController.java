@@ -2,12 +2,14 @@ package com.example.game.unit.controller;
 
 import com.example.game.common.dto.ResponseDto;
 import com.example.game.config.UserDetailsImpl;
+import com.example.game.unit.dto.UnitDeployRequestDto;
 import com.example.game.unit.dto.UnitListResponseDto;
 import com.example.game.unit.service.UnitService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -26,5 +28,12 @@ public class UnitController {
     @GetMapping("/unit")
     public ResponseDto<UnitListResponseDto> getUnitList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return ResponseDto.success(unitService.getUnitList(userDetails.getUser()));
+    }
+
+    @PostMapping("/unit/deploy")
+    public ResponseDto<String> deployUnit(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody UnitDeployRequestDto unitDeployRequestDto) {
+        unitService.deployUnit(userDetails.getUser(), unitDeployRequestDto);
+
+        return ResponseDto.success("success");
     }
 }

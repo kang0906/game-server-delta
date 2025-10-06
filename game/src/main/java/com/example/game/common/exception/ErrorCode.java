@@ -6,12 +6,12 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ErrorCode {
     DUPLICATE_USERNAME(HttpStatus.BAD_REQUEST, "Username is Duplicated", "사용 불가능한 아이디 입니다."),
-    VALIDATION_FAIL(HttpStatus.BAD_REQUEST, "Bad Request", "잘못된 요청입니다."),
+    VALIDATION_FAIL(HttpStatus.BAD_REQUEST, "Bad Request_01", "잘못된 요청입니다."),
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "Bad Request", "잘못된 요청입니다."),
     NEED_INFRA(HttpStatus.BAD_REQUEST, "request need facility", "기반시설이 필요한 요청입니다."),
     ALREADY_IN_PROGRESS(HttpStatus.BAD_REQUEST, "Command already in progress", "이미 수행중인 명령입니다."),
     DATA_NOT_FOUND(HttpStatus.NOT_FOUND, "Data Not Found", "존재하지 않는 데이터 입니다."),
-    CANT_EDIT(HttpStatus.BAD_REQUEST, "CUSTOMER_GROUP_01","수정 할 권한이 없습니다."),
+    CANT_EDIT(HttpStatus.BAD_REQUEST, "Can Not Edit","수정 할 수 없습니다."),
     DESTINATION_NOT_EMPTY(HttpStatus.BAD_REQUEST, "Destination Field is Not Empty","목적지가 비어있지 않습니다."),
     NOT_ENOUGH_ITEM(HttpStatus.BAD_REQUEST,"Not enough item","아이템이 충분하지 않습니다."),
     NOT_ENOUGH_MONEY(HttpStatus.BAD_REQUEST,"Not enough money","잔액이 충분하지 않습니다."),

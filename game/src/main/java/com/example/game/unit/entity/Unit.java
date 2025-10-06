@@ -43,4 +43,8 @@ public class Unit {
         this.unitType = unitType;
         this.deploy = null;
     }
+
+    public void deployUnit(Deploy deploy) {
+        this.deploy = deploy;
+    }
 }
