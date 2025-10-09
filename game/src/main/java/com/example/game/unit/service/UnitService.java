@@ -47,7 +47,7 @@ public class UnitService {
     @Transactional
     public void deployUnit(User user, UnitDeployRequestDto unitDeployRequestDto) {
 
-        if(unitRepository.findByUserAndDeploy(user, unitDeployRequestDto.getDeployEnum()).isPresent()){
+        if(unitDeployRequestDto.getDeployEnum() != null && unitRepository.findByUserAndDeploy(user, unitDeployRequestDto.getDeployEnum()).isPresent()){
             throw new GlobalException(DESTINATION_NOT_EMPTY);
         }
 

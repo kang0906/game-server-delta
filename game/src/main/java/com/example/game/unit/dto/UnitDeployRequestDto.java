@@ -13,6 +13,9 @@ public class UnitDeployRequestDto {
     private String deploy;
 
     public Deploy getDeployEnum() {
+        if(deploy == null) {
+            return null;
+        }
         return Deploy.valueOf(deploy);
     }
 }
