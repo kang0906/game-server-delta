@@ -30,6 +30,8 @@ public class Unit {
     private UnitType unitType;
     @Enumerated(EnumType.STRING)
     private Deploy deploy;
+    @Embedded
+    private UpgradeList upgradeList;
 
     public Unit(User user) {
         UnitType unitType = UnitType.getRandomUnitType();

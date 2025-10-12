@@ -89,7 +89,7 @@ class UnitServiceTest {
         Assertions.assertThat(unitList.getUnitList())
                 .extracting("unitType")
                 .containsAnyOf(
-                        UnitType.values()
+                        (Object[]) UnitType.values()
                 );
     }
     

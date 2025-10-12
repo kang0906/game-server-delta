@@ -8,6 +8,7 @@ public enum ErrorCode {
     DUPLICATE_USERNAME(HttpStatus.BAD_REQUEST, "Username is Duplicated", "사용 불가능한 아이디 입니다."),
     VALIDATION_FAIL(HttpStatus.BAD_REQUEST, "Bad Request_01", "잘못된 요청입니다."),
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "Bad Request", "잘못된 요청입니다."),
+    CAN_NOT_UPGRADE(HttpStatus.BAD_REQUEST, "can not upgrade", "업그레이드 할 수 없습니다."),
     NEED_INFRA(HttpStatus.BAD_REQUEST, "request need facility", "기반시설이 필요한 요청입니다."),
     ALREADY_IN_PROGRESS(HttpStatus.BAD_REQUEST, "Command already in progress", "이미 수행중인 명령입니다."),
     DATA_NOT_FOUND(HttpStatus.NOT_FOUND, "Data Not Found", "존재하지 않는 데이터 입니다."),

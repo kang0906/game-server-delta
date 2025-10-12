@@ -4,13 +4,11 @@ import com.example.game.common.dto.ResponseDto;
 import com.example.game.config.UserDetailsImpl;
 import com.example.game.unit.dto.UnitDeployRequestDto;
 import com.example.game.unit.dto.UnitListResponseDto;
+import com.example.game.unit.dto.UnitUpgradeResponseDto;
 import com.example.game.unit.service.UnitService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,5 +33,10 @@ public class UnitController {
         unitService.deployUnit(userDetails.getUser(), unitDeployRequestDto);
 
         return ResponseDto.success("success");
+    }
+
+    @GetMapping("/unit/{unitId}/upgrade")
+    public ResponseDto<UnitUpgradeResponseDto> getUnitUpgradeList(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long unitId) {
+        return ResponseDto.success(unitService.getUnitUpgradeList(userDetails.getUser(), unitId));
     }
 }
