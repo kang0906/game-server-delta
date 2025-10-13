@@ -1,6 +1,6 @@
 package com.example.game.unit.repository;
 
-import com.example.game.unit.entity.Deploy;
+import com.example.game.unit.entity.enums.Deploy;
 import com.example.game.unit.entity.Unit;
 import com.example.game.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;

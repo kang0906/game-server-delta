@@ -1,12 +1,12 @@
 package com.example.game.unit.entity;
 
+import com.example.game.unit.entity.enums.Deploy;
+import com.example.game.unit.entity.enums.UnitType;
 import com.example.game.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.Random;
 
 @Entity
 @Getter

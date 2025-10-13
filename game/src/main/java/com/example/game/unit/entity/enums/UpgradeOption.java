@@ -1,4 +1,4 @@
-package com.example.game.unit.entity;
+package com.example.game.unit.entity.enums;
 
 import lombok.Getter;
 

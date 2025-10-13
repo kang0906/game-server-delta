@@ -3,7 +3,7 @@ package com.example.game.unit.service;
 import com.example.game.common.exception.ErrorCode;
 import com.example.game.common.exception.GlobalException;
 import com.example.game.unit.dto.UnitDeployRequestDto;
-import com.example.game.unit.entity.Deploy;
+import com.example.game.unit.entity.enums.Deploy;
 import com.example.game.unit.entity.Unit;
 import com.example.game.unit.repository.UnitRepository;
 import com.example.game.user.entity.User;
@@ -15,10 +15,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional

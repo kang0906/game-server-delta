@@ -3,7 +3,7 @@ package com.example.game.unit.service;
 import com.example.game.common.exception.ErrorCode;
 import com.example.game.common.exception.GlobalException;
 import com.example.game.unit.dto.UnitListResponseDto;
-import com.example.game.unit.entity.UnitType;
+import com.example.game.unit.entity.enums.UnitType;
 import com.example.game.unit.repository.UnitRepository;
 import com.example.game.user.entity.User;
 import com.example.game.user.entity.UserGameInfo;
@@ -16,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.groups.Tuple.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional

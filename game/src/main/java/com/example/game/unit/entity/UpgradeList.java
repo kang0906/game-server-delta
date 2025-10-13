@@ -1,5 +1,6 @@
 package com.example.game.unit.entity;
 
+import com.example.game.unit.entity.enums.UpgradeOption;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

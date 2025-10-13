@@ -1,6 +1,6 @@
 package com.example.game.unit.dto;
 
-import com.example.game.unit.entity.Deploy;
+import com.example.game.unit.entity.enums.Deploy;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

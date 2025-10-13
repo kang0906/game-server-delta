@@ -1,7 +1,6 @@
 package com.example.game.unit.dto;
 
 import com.example.game.unit.entity.UpgradeList;
-import com.example.game.unit.entity.UpgradeOption;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

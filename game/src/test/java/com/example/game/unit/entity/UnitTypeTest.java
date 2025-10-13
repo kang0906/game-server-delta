@@ -1,5 +1,6 @@
 package com.example.game.unit.entity;
 
+import com.example.game.unit.entity.enums.UnitType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
