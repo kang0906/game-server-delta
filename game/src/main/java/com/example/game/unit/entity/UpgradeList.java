@@ -20,4 +20,11 @@ public class UpgradeList {
     private UpgradeOption option2;
     @Enumerated(EnumType.STRING)
     private UpgradeOption option3;
+
+    public boolean checkIfOptionNotMatch(UpgradeOption upgradeOption) {
+        if(upgradeOption == option1 || upgradeOption == option2 || upgradeOption == option3) {
+            return false;
+        }
+        return true;
+    }
 }

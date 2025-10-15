@@ -4,7 +4,8 @@ import com.example.game.common.dto.ResponseDto;
 import com.example.game.config.UserDetailsImpl;
 import com.example.game.unit.dto.UnitDeployRequestDto;
 import com.example.game.unit.dto.UnitListResponseDto;
-import com.example.game.unit.dto.UnitUpgradeResponseDto;
+import com.example.game.unit.dto.UnitUpgradeRequestDto;
+import com.example.game.unit.dto.UnitUpgradeOptionsResponseDto;
 import com.example.game.unit.service.UnitService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -36,7 +37,15 @@ public class UnitController {
     }
 
     @GetMapping("/unit/{unitId}/upgrade")
-    public ResponseDto<UnitUpgradeResponseDto> getUnitUpgradeList(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long unitId) {
+    public ResponseDto<UnitUpgradeOptionsResponseDto> getUnitUpgradeList(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long unitId) {
         return ResponseDto.success(unitService.getUnitUpgradeList(userDetails.getUser(), unitId));
+    }
+
+    @PostMapping("/unit/{unitId}/upgrade")
+    public ResponseDto<String> getUnitUpgradeList(
+            @AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long unitId, @RequestBody UnitUpgradeRequestDto unitUpgradeRequestDto) {
+
+        unitService.unitUpgrade(userDetails.getUser(), unitId, unitUpgradeRequestDto.getUpgradeOptionEnumByString());
+        return ResponseDto.success("success");
     }
 }

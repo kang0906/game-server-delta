@@ -33,6 +33,7 @@ public class Unit {
     private int hp;
     private int attackSpeed;
     private int moveSpeed;
+    private int level;
     @Enumerated(EnumType.STRING)
     private UnitType unitType;
     @Enumerated(EnumType.STRING)
@@ -61,5 +62,16 @@ public class Unit {
         ArrayList<UpgradeOption> upgradeOptions = new ArrayList<>(List.of(UpgradeOption.values()));
         Collections.shuffle(upgradeOptions);
         this.upgradeList = new UpgradeList(upgradeOptions.get(0), upgradeOptions.get(1), upgradeOptions.get(2));
+    }
+
+    public void upgradeUnit(UpgradeOption upgradeOption) {
+        switch (upgradeOption) {
+            case AP -> this.ap++;
+            case HP -> this.hp++;
+            case DEF -> this.def++;
+            case ATTACK_SPEED -> this.attackSpeed++;
+            case MOVE_SPEED -> this.moveSpeed++;
+        }
+        this.upgradeList = null;
     }
 }

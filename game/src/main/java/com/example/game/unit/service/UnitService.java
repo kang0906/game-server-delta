@@ -1,12 +1,9 @@
 package com.example.game.unit.service;
 
-import com.example.game.common.dto.ResponseDto;
 import com.example.game.common.exception.GlobalException;
-import com.example.game.unit.dto.UnitDeployRequestDto;
-import com.example.game.unit.dto.UnitDto;
-import com.example.game.unit.dto.UnitListResponseDto;
-import com.example.game.unit.dto.UnitUpgradeResponseDto;
+import com.example.game.unit.dto.*;
 import com.example.game.unit.entity.Unit;
+import com.example.game.unit.entity.enums.UpgradeOption;
 import com.example.game.unit.repository.UnitRepository;
 import com.example.game.user.entity.User;
 import com.example.game.user.repository.UserRepository;
@@ -56,7 +53,6 @@ public class UnitService {
                 .orElseThrow(() -> new GlobalException(DATA_NOT_FOUND));
         Unit unit = unitRepository.findById(unitDeployRequestDto.getUnitId())
                 .orElseThrow(() -> new GlobalException(DATA_NOT_FOUND));
-
         if(unit.getUser().getUserId() != user.getUserId()) {
             throw new GlobalException(VALIDATION_FAIL);
         }
@@ -64,7 +60,7 @@ public class UnitService {
         unit.deployUnit(unitDeployRequestDto.getDeployEnum());
     }
 
-    public UnitUpgradeResponseDto getUnitUpgradeList(User user, Long unitId) {
+    public UnitUpgradeOptionsResponseDto getUnitUpgradeList(User user, Long unitId) {
         Unit unit = unitRepository.findById(unitId)
                 .orElseThrow(() -> new GlobalException(DATA_NOT_FOUND));
         if(unit.getUser().getUserId() != user.getUserId()) {
@@ -75,6 +71,21 @@ public class UnitService {
             throw new GlobalException(CAN_NOT_UPGRADE);
         }
 
-        return new UnitUpgradeResponseDto(unit.getUpgradeList());
+        return new UnitUpgradeOptionsResponseDto(unit.getUpgradeList());
+    }
+
+    @Transactional
+    public void unitUpgrade(User user, Long unitId, UpgradeOption upgradeOption) {
+        Unit unit = unitRepository.findById(unitId)
+                .orElseThrow(() -> new GlobalException(DATA_NOT_FOUND));
+        if(unit.getUser().getUserId() != user.getUserId()) {
+            throw new GlobalException(VALIDATION_FAIL);
+        }
+
+        if (unit.getUpgradeList() == null || unit.getUpgradeList().checkIfOptionNotMatch(upgradeOption)){
+            throw new GlobalException(CAN_NOT_UPGRADE);
+        }
+
+        unit.upgradeUnit(upgradeOption);
     }
 }

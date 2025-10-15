@@ -1,6 +1,6 @@
 package com.example.game.unit.service;
 
-import com.example.game.unit.dto.UnitUpgradeResponseDto;
+import com.example.game.unit.dto.UnitUpgradeOptionsResponseDto;
 import com.example.game.unit.entity.Unit;
 import com.example.game.unit.entity.enums.UpgradeOption;
 import com.example.game.unit.repository.UnitRepository;
@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -41,7 +40,7 @@ class UnitServiceUnitUpgradeTest {
             unit.setUpgradeList();
 
             // when
-            UnitUpgradeResponseDto unitUpgradeList = unitService.getUnitUpgradeList(user, unit.getUnitId());
+            UnitUpgradeOptionsResponseDto unitUpgradeList = unitService.getUnitUpgradeList(user, unit.getUnitId());
 
             //then
             assertThat(unitUpgradeList).isNotNull();
