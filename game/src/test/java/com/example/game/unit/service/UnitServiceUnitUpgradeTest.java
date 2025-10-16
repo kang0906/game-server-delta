@@ -1,5 +1,7 @@
 package com.example.game.unit.service;
 
+import com.example.game.common.exception.ErrorCode;
+import com.example.game.common.exception.GlobalException;
 import com.example.game.unit.dto.UnitUpgradeOptionsResponseDto;
 import com.example.game.unit.entity.Unit;
 import com.example.game.unit.entity.enums.UpgradeOption;
@@ -28,6 +30,70 @@ class UnitServiceUnitUpgradeTest {
 
     @Autowired
     private UnitService unitService;
+
+    @DisplayName("유닛을 정상적으로 업그레이드 한다.")
+    @Test
+    void unitUpgradeTest() {
+        // given
+        User user = userRepository.save(new User("testUser", 1L, "testUser", "testUser", new UserGameInfo(500)));
+        Unit unit = unitRepository.save(new Unit(user));
+        unit.setUpgradeList();
+        String option1 = unitService.getUnitUpgradeList(user, unit.getUnitId()).getOption1();
+
+        // when
+        unitService.unitUpgrade(user, unit.getUnitId(), UpgradeOption.valueOf(option1));
+
+        // then
+        int unitStat = unit.getAp() + unit.getHp() + unit.getDef() + unit.getAttackSpeed() + unit.getMoveSpeed();
+        assertThat(unitStat).isEqualTo(1);
+        assertThat(unit.getUpgradeList()).isNull();
+    }
+
+    @DisplayName("유닛의 소유자가 아닐경우 예외가 발생한다.")
+    @Test
+    void unitUpgradeFailByUserCheckTest() {
+        // given
+        User user = userRepository.save(new User("testUser", 1L, "testUser", "testUser", new UserGameInfo(500)));
+        User user2 = userRepository.save(new User("testUser2", 2L, "testUser2", "testUser2", new UserGameInfo(500)));
+        Unit unit = unitRepository.save(new Unit(user));
+        unit.setUpgradeList();
+        String option1 = unitService.getUnitUpgradeList(user, unit.getUnitId()).getOption1();
+
+        // when then
+        assertThatThrownBy(() ->unitService.unitUpgrade(user2, unit.getUnitId(), UpgradeOption.valueOf(option1)))
+                .isInstanceOf(GlobalException.class)
+                .hasMessage(ErrorCode.VALIDATION_FAIL.getMessage());
+    }
+
+    @DisplayName("유닛이 업그레이드 준비가 안된경우 예외가 발생한다.(업그레이드 두번 시도)")
+    @Test
+    void unitUpgradeFailByRequestDuplicateTest() {
+        // given
+        User user = userRepository.save(new User("testUser", 1L, "testUser", "testUser", new UserGameInfo(500)));
+        Unit unit = unitRepository.save(new Unit(user));
+        unit.setUpgradeList();
+        String option1 = unitService.getUnitUpgradeList(user, unit.getUnitId()).getOption1();
+        unitService.unitUpgrade(user, unit.getUnitId(), UpgradeOption.valueOf(option1));
+
+        // when then
+        assertThatThrownBy(() ->unitService.unitUpgrade(user, unit.getUnitId(), UpgradeOption.valueOf(option1)))
+                .isInstanceOf(GlobalException.class)
+                .hasMessage(ErrorCode.CAN_NOT_UPGRADE.getMessage());
+    }
+
+    @DisplayName("유닛이 업그레이드 준비가 안된경우 예외가 발생한다.(아무스탯이나 업그레이드 시도)")
+    @Test
+    void unitUpgradeFailByUpgradeNotReadyTest() {
+        // given
+        User user = userRepository.save(new User("testUser", 1L, "testUser", "testUser", new UserGameInfo(500)));
+        Unit unit = unitRepository.save(new Unit(user));
+
+        // when then
+        assertThatThrownBy(() ->unitService.unitUpgrade(user, unit.getUnitId(), UpgradeOption.AP))
+                .isInstanceOf(GlobalException.class)
+                .hasMessage(ErrorCode.CAN_NOT_UPGRADE.getMessage());
+    }
+
 
     @DisplayName("유닛 업그레이드 정보를 정상적으로 조회한다.")
     @Test
