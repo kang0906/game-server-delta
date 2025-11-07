@@ -5,9 +5,9 @@ import lombok.Getter;
 
 @Getter
 public class UserInfoResponseDto {
-    private String username;
+    private int money;
 
     public UserInfoResponseDto(User user) {
-        this.username = user.getUsername();
+        this.money = user.getUserGameInfo().getMoney();
     }
 }

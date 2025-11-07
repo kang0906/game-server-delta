@@ -1,7 +1,5 @@
 package com.example.game.unit.entity;
 
-import com.example.game.common.exception.ErrorCode;
-import com.example.game.common.exception.GlobalException;
 import com.example.game.unit.entity.enums.Deploy;
 import com.example.game.unit.entity.enums.UnitType;
 import com.example.game.unit.entity.enums.UpgradeOption;
