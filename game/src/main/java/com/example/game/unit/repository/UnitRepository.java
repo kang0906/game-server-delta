@@ -12,5 +12,5 @@ public interface UnitRepository extends JpaRepository<Unit, Long> {
 
     public List<Unit> findAllByUser(User user);
     public Optional<Unit> findByUserAndDeploy(User user, Deploy deploy);
-
+    public List<Unit> findAllByUserAndDeployIsNotNull(User user);
 }
