@@ -17,6 +17,7 @@ public class DeploymentMap {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long deploymentMapId;
 
+    private long userId;
     private int mmr;
 
     @OneToMany(mappedBy = "deploymentMap", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -24,6 +25,7 @@ public class DeploymentMap {
 
     public DeploymentMap(List<Unit> unitList) {
         int mmr = 0;
+        userId = unitList.get(0).getUser().getUserId();
 
         for (Unit unit : unitList) {
             deployUnitList.add(new DeployUnit(unit, this));
