@@ -48,6 +48,7 @@ public class Unit {
         this.hp = 0;
         this.attackSpeed = 0;
         this.moveSpeed = 0;
+        this.level = 0;
         this.unitType = unitType;
         this.deploy = null;
     }
@@ -56,7 +57,14 @@ public class Unit {
         this.deploy = deploy;
     }
 
-    public void setUpgradeList() {
+    public void levelUp() {
+        level++;
+        if (upgradeList == null) {
+           setUpgradeList();
+        }
+    }
+
+    private void setUpgradeList() {
         ArrayList<UpgradeOption> upgradeOptions = new ArrayList<>(List.of(UpgradeOption.values()));
         Collections.shuffle(upgradeOptions);
         this.upgradeList = new UpgradeList(upgradeOptions.get(0), upgradeOptions.get(1), upgradeOptions.get(2));
@@ -70,6 +78,11 @@ public class Unit {
             case ATTACK_SPEED -> this.attackSpeed++;
             case MOVE_SPEED -> this.moveSpeed++;
         }
-        this.upgradeList = null;
+
+        if (level > ap + hp + def + attackSpeed + moveSpeed) {
+            setUpgradeList();
+        } else {
+            this.upgradeList = null;
+        }
     }
 }

@@ -37,7 +37,7 @@ class UnitServiceUnitUpgradeTest {
         // given
         User user = userRepository.save(new User("testUser", 1L, "testUser", "testUser", new UserGameInfo(500)));
         Unit unit = unitRepository.save(new Unit(user));
-        unit.setUpgradeList();
+        unit.levelUp();
         String option1 = unitService.getUnitUpgradeList(user, unit.getUnitId()).getOption1();
 
         // when
@@ -47,6 +47,7 @@ class UnitServiceUnitUpgradeTest {
         int unitStat = unit.getAp() + unit.getHp() + unit.getDef() + unit.getAttackSpeed() + unit.getMoveSpeed();
         assertThat(unitStat).isEqualTo(1);
         assertThat(unit.getUpgradeList()).isNull();
+        assertThat(unit.getLevel()).isEqualTo(1);
     }
 
     @DisplayName("유닛의 소유자가 아닐경우 예외가 발생한다.")
@@ -56,7 +57,7 @@ class UnitServiceUnitUpgradeTest {
         User user = userRepository.save(new User("testUser", 1L, "testUser", "testUser", new UserGameInfo(500)));
         User user2 = userRepository.save(new User("testUser2", 2L, "testUser2", "testUser2", new UserGameInfo(500)));
         Unit unit = unitRepository.save(new Unit(user));
-        unit.setUpgradeList();
+        unit.levelUp();
         String option1 = unitService.getUnitUpgradeList(user, unit.getUnitId()).getOption1();
 
         // when then
@@ -71,7 +72,7 @@ class UnitServiceUnitUpgradeTest {
         // given
         User user = userRepository.save(new User("testUser", 1L, "testUser", "testUser", new UserGameInfo(500)));
         Unit unit = unitRepository.save(new Unit(user));
-        unit.setUpgradeList();
+        unit.levelUp();
         String option1 = unitService.getUnitUpgradeList(user, unit.getUnitId()).getOption1();
         unitService.unitUpgrade(user, unit.getUnitId(), UpgradeOption.valueOf(option1));
 
@@ -103,7 +104,7 @@ class UnitServiceUnitUpgradeTest {
         Unit unit = unitRepository.save(new Unit(user));
 
         for(int i = 0; i< 100; i++) {
-            unit.setUpgradeList();
+            unit.levelUp();
 
             // when
             UnitUpgradeOptionsResponseDto unitUpgradeList = unitService.getUnitUpgradeList(user, unit.getUnitId());
@@ -131,6 +132,46 @@ class UnitServiceUnitUpgradeTest {
             assertThat(unitUpgradeList.getOption1())
                     .isNotEqualTo(unitUpgradeList.getOption3());
         }
+    }
+
+    @DisplayName("(레벨 > 스탯합)의 경우 업그레이드 목록을 새로 생성해 준다.")
+    @Test
+    void unitUpgradeOverLevelCheckTest() {
+        // given
+        User user = userRepository.save(new User("testUser", 1L, "testUser", "testUser", new UserGameInfo(500)));
+        Unit unit = unitRepository.save(new Unit(user));
+        unit.levelUp();
+        unit.levelUp();
+        String option1 = unitService.getUnitUpgradeList(user, unit.getUnitId()).getOption1();
+
+        // when
+        unitService.unitUpgrade(user, unit.getUnitId(), UpgradeOption.valueOf(option1));
+
+        // then
+        int unitStat = unit.getAp() + unit.getHp() + unit.getDef() + unit.getAttackSpeed() + unit.getMoveSpeed();
+        assertThat(unitStat).isEqualTo(1);
+        assertThat(unit.getUpgradeList()).isNotNull();
+        assertThat(unit.getLevel()).isEqualTo(2);
+
+
+        assertThat(unit.getUpgradeList().getOption1().toString()).isNotNull()
+                .containsAnyOf(Arrays.stream(UpgradeOption.values()).map(Enum::name).toArray(String[]::new));
+
+        assertThat(unit.getUpgradeList().getOption2().toString()).isNotNull()
+                .containsAnyOf(Arrays.stream(UpgradeOption.values()).map(Enum::name).toArray(String[]::new));
+
+        assertThat(unit.getUpgradeList().getOption3().toString()).isNotNull()
+                .containsAnyOf(Arrays.stream(UpgradeOption.values()).map(Enum::name).toArray(String[]::new));
+
+
+        assertThat(unit.getUpgradeList().getOption1())
+                .isNotEqualTo(unit.getUpgradeList().getOption2());
+
+        assertThat(unit.getUpgradeList().getOption2())
+                .isNotEqualTo(unit.getUpgradeList().getOption3());
+
+        assertThat(unit.getUpgradeList().getOption1())
+                .isNotEqualTo(unit.getUpgradeList().getOption3());
     }
 
 }
