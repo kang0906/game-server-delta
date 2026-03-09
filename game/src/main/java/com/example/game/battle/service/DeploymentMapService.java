@@ -37,10 +37,10 @@ public class DeploymentMapService {
     }
 
     public List<BattleUnit> findDeploymentMapByMMR(int mmr) {
-        Optional<DeploymentMap> exact = deploymentMapRepository.findByMmr(mmr);
-        if (exact.isPresent()) {
-            return exact.get().getDeployUnitList().stream().map(BattleUnit::new).toList();
-        }
+//        Optional<DeploymentMap> exact = deploymentMapRepository.findByMmr(mmr);
+//        if (exact.isPresent()) {
+//            return exact.get().getDeployUnitList().stream().map(BattleUnit::new).toList();
+//        }
 
         Optional<DeploymentMap> upper =
                 deploymentMapRepository.findFirstByMmrGreaterThanEqualOrderByMmrAsc(mmr);
@@ -62,6 +62,6 @@ public class DeploymentMapService {
         int diffLower = Math.abs(lower.get().getMmr() - mmr);
 
         return (diffUpper < diffLower ? upper.get() : lower.get())
-                    .getDeployUnitList().stream().map(BattleUnit::new).toList();
+                    .getDeployUnitList().stream().map(BattleUnit::new).map(BattleUnit::reverseLocation).toList();
     }
 }

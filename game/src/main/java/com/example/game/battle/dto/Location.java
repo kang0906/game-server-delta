@@ -1,7 +1,9 @@
 package com.example.game.battle.dto;
 
 import com.example.game.unit.entity.enums.Deploy;
+import lombok.Getter;
 
+@Getter
 public enum Location {
     A1, B1, C1, D1, E1, F1, G1, H1,
     A2, B2, C2, D2, E2, F2, G2, H2,
@@ -13,7 +15,25 @@ public enum Location {
     A8, B8, C8, D8, E8, F8, G8, H8
     ;
 
+    private final int x;
+    private final int y;
+
+    public int getDistance(Location l) {
+        return Math.abs(this.x - l.x) + Math.abs(this.y - l.y);
+    }
+
     public static Location deployToLocation(Deploy deploy) {
         return Location.valueOf(deploy.name());
+    }
+
+    Location() {
+        int idx = this.ordinal();
+        this.x = idx % 8;
+        this.y = idx / 8;
+    }
+
+    public Location flipVertical() {
+        int flippedY = 7 - this.y;
+        return Location.values()[flippedY * 8 + this.x];
     }
 }

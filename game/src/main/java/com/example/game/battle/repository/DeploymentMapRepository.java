@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface DeploymentMapRepository extends JpaRepository<DeploymentMap, Long> {
 
     Optional<DeploymentMap> findFirstByMmrGreaterThanEqualOrderByMmrAsc(int mmr);
-    Optional<DeploymentMap> findFirstByMmrLessThanEqualOrderByMmrDesc(int mmr);
+    Optional<DeploymentMap> findFirstByMmrLessThanEqualOrderByMmrDesc(int mmr); // todo : lessThan 으로 수정
     Optional<DeploymentMap> findByMmr(int mmr);
 
 }

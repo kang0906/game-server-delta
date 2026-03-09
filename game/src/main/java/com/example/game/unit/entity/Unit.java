@@ -53,8 +53,9 @@ public class Unit {
         this.deploy = null;
     }
 
-    public void deployUnit(Deploy deploy) {
+    public Unit deployUnit(Deploy deploy) {
         this.deploy = deploy;
+        return this;
     }
 
     public void levelUp() {

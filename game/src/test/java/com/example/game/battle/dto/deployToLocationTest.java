@@ -21,5 +21,19 @@ class deployToLocationTest {
         Assertions.assertThat(location).isEqualTo(Location.A1);
     }
 
+    @DisplayName("Location 수직 반전 함수 테스트")
+    @Test
+    void flipVerticalTest() {
+        // given
+        Location[] values = Location.values();
+
+        // when
+        for (Location value : values) {
+            System.out.println(value + "=>" + value.flipVertical());
+        }
+
+        // then
+
+    }
 
 }
