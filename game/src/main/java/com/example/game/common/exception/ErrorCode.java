@@ -14,6 +14,7 @@ public enum ErrorCode {
     DATA_NOT_FOUND(HttpStatus.NOT_FOUND, "Data Not Found", "존재하지 않는 데이터 입니다."),
     CANT_EDIT(HttpStatus.BAD_REQUEST, "Can Not Edit","수정 할 수 없습니다."),
     DESTINATION_NOT_EMPTY(HttpStatus.BAD_REQUEST, "Destination Field is Not Empty","목적지가 비어있지 않습니다."),
+    CANNOT_OVERLAP_UNIT(HttpStatus.BAD_REQUEST, "Units cannot overlap.","유닛은 겹쳐질 수 없습니다."),
     NOT_ENOUGH_ITEM(HttpStatus.BAD_REQUEST,"Not enough item","아이템이 충분하지 않습니다."),
     NOT_ENOUGH_MONEY(HttpStatus.BAD_REQUEST,"Not enough money","잔액이 충분하지 않습니다."),
     CAN_NOT_USE_NEGATIVE_NUMBER(HttpStatus.BAD_REQUEST,"can not user negative number","0 이상만 사용할 수 있습니다."),

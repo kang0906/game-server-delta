@@ -1,6 +1,8 @@
 package com.example.game.battle.dto;
 
 import com.example.game.battle.entity.DeployUnit;
+import com.example.game.common.exception.ErrorCode;
+import com.example.game.common.exception.GlobalException;
 import com.example.game.unit.entity.Unit;
 import com.example.game.unit.entity.enums.UnitType;
 import com.example.game.user.entity.User;
@@ -79,6 +81,8 @@ public class BattleUnit {
 
         if (minDist == 1 && lastMove >= attackSpeed) {
             attack(nearestTarget, hostileUnitList);
+        } else if (minDist == 0) {
+            throw new GlobalException(ErrorCode.CANNOT_OVERLAP_UNIT);
         } else {
             moveTo(nearestTarget, hostileUnitList, friendlyUnitList);
         }
