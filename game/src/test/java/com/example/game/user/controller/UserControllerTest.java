@@ -1,5 +1,6 @@
 package com.example.game.user.controller;
 
+import com.example.game.admin.alert.service.AlertService;
 import com.example.game.config.SecurityConfig;
 import com.example.game.config.jwt.JwtAuthenticationFilter;
 import com.example.game.config.jwt.JwtAuthorizationFilter;
@@ -41,6 +42,9 @@ class UserControllerTest {
 
     @MockBean
     private UserService userService;
+
+    @MockBean
+    private AlertService alertService;
 
     @DisplayName("유저 닉네임을 변경한다.")
     @Test
