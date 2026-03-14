@@ -3,6 +3,7 @@ package com.example.game.battle.dto.report;
 import com.example.game.battle.dto.BattleUnit;
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -11,7 +12,7 @@ public class BattleReport {
     private List<BattleUnit> userUnitList;
     private List<BattleUnit> hostileUnitList;
 
-    private List<MovePerRound> movePerRoundList;
+    private List<MovePerRound> movePerRoundList = new ArrayList<>();
 
     private BattleResult battleResult;
 }

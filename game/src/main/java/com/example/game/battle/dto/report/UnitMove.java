@@ -4,11 +4,10 @@ import com.example.game.battle.dto.Location;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.List;
-
 @Getter
 @AllArgsConstructor
-public class MovePerRound {
-    private int round;
-    private List<UnitMove> unitMoveList;
+public class UnitMove {
+    private int unitId;
+    private Location unitMove;
+    private Location unitAttack;
 }

@@ -50,6 +50,7 @@ public class DeploymentMapService {
 
         if (upper.isEmpty() && lower.isEmpty()){
             alertService.sendAlert(AlertLevel.ERROR, "저장된 전투매핑정보가 없습니다.");
+            log.warn("저장된 전투매핑정보가 없습니다.");
         }
 
         if (upper.isEmpty()) {
@@ -62,6 +63,6 @@ public class DeploymentMapService {
         int diffLower = Math.abs(lower.get().getMmr() - mmr);
 
         return (diffUpper < diffLower ? upper.get() : lower.get())
-                    .getDeployUnitList().stream().map(BattleUnit::new).map(BattleUnit::reverseLocation).toList();
+                    .getDeployUnitList().stream().map(BattleUnit::new).map(BattleUnit::reverseLocation).map(BattleUnit::reverseUnitId).toList();
     }
 }

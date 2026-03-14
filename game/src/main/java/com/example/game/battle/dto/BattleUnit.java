@@ -134,6 +134,7 @@ public class BattleUnit {
 
         if (location == bestMove) {
             log.debug("unit blocked [unit: {}, location: {}]", this.getUnitId(), location.toString());
+            return;
         }
         log.debug("unit(id: {}) move to {} => {}", this.unitId, location.toString(), bestMove);
 
@@ -172,6 +173,11 @@ public class BattleUnit {
 
     public BattleUnit reverseLocation() {
         this.location = location.flipVertical();
+        return this;
+    }
+
+    public BattleUnit reverseUnitId() {
+        this.unitId = this.unitId * -1;
         return this;
     }
 }
