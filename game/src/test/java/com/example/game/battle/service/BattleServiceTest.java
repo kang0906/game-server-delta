@@ -1,5 +1,6 @@
 package com.example.game.battle.service;
 
+import com.example.game.battle.dto.report.BattleReport;
 import com.example.game.battle.entity.DeploymentMap;
 import com.example.game.battle.repository.DeploymentMapRepository;
 import com.example.game.unit.entity.Unit;
@@ -8,6 +9,10 @@ import com.example.game.unit.repository.UnitRepository;
 import com.example.game.user.entity.User;
 import com.example.game.user.entity.UserGameInfo;
 import com.example.game.user.repository.UserRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,9 +57,17 @@ class BattleServiceTest {
         unitRepository.save(new Unit(user).deployUnit(Deploy.E2));
 
         // when
-        battleService.makeBattle(user);
+        BattleReport battleReport = battleService.makeBattle(user);
 
         // then
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule()); // 필수 등록
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        try {
+            System.out.println("battleReport = \n" + objectMapper.writeValueAsString(battleReport));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

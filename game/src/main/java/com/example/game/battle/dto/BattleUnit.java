@@ -1,5 +1,6 @@
 package com.example.game.battle.dto;
 
+import com.example.game.battle.dto.report.UnitMove;
 import com.example.game.battle.entity.DeployUnit;
 import com.example.game.common.exception.ErrorCode;
 import com.example.game.common.exception.GlobalException;
@@ -7,9 +8,11 @@ import com.example.game.unit.entity.Unit;
 import com.example.game.unit.entity.enums.UnitType;
 import com.example.game.user.entity.User;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Slf4j
@@ -61,14 +64,14 @@ public class BattleUnit {
         this.moveSpeed = unitType.getMoveSpeed() - (unitType.getMoveSpeedUpgradeWeight() * unit.getMoveSpeed());
     }
 
-    public void action(List<BattleUnit> hostileUnitList, List<BattleUnit> friendlyUnitList) {
+    public Optional<UnitMove> action(List<BattleUnit> hostileUnitList, List<BattleUnit> friendlyUnitList) {
         BattleUnit nearestTarget = null;
         int minDist = Integer.MAX_VALUE;
 
         // 쿨타임 체크(이동, 공격)
         if (lastMove < moveSpeed && lastMove < attackSpeed) {
             lastMove++;
-            return;
+            return Optional.empty();
         }
 
         for (BattleUnit enemy : hostileUnitList) {
@@ -81,10 +84,12 @@ public class BattleUnit {
 
         if (minDist == 1 && lastMove >= attackSpeed) {
             attack(nearestTarget, hostileUnitList);
+            return Optional.of(new UnitMove(this.unitId, null, nearestTarget.location));
         } else if (minDist == 0) {
             throw new GlobalException(ErrorCode.CANNOT_OVERLAP_UNIT);
         } else {
             moveTo(nearestTarget, hostileUnitList, friendlyUnitList);
+            return Optional.of(new UnitMove(this.unitId, this.location, null));
         }
     }
 

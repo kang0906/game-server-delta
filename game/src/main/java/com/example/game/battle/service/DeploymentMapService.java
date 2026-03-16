@@ -36,7 +36,7 @@ public class DeploymentMapService {
         deploymentMapRepository.save(new DeploymentMap(unitList));
     }
 
-    public List<BattleUnit> findDeploymentMapByMMR(int mmr) {
+    public DeploymentMap findDeploymentMapByMMR(int mmr) {
 //        Optional<DeploymentMap> exact = deploymentMapRepository.findByMmr(mmr);
 //        if (exact.isPresent()) {
 //            return exact.get().getDeployUnitList().stream().map(BattleUnit::new).toList();
@@ -54,15 +54,15 @@ public class DeploymentMapService {
         }
 
         if (upper.isEmpty()) {
-            return lower.get().getDeployUnitList().stream().map(BattleUnit::new).toList();
+            return lower.get();
         } else if (lower.isEmpty()) {
-            return upper.get().getDeployUnitList().stream().map(BattleUnit::new).toList();
+            return upper.get();
         }
 
         int diffUpper = Math.abs(upper.get().getMmr() - mmr);
         int diffLower = Math.abs(lower.get().getMmr() - mmr);
 
-        return (diffUpper < diffLower ? upper.get() : lower.get())
-                    .getDeployUnitList().stream().map(BattleUnit::new).map(BattleUnit::reverseLocation).map(BattleUnit::reverseUnitId).toList();
+        return (diffUpper < diffLower ? upper.get() : lower.get());
+//                    .getDeployUnitList().stream().map(BattleUnit::new).map(BattleUnit::reverseLocation).map(BattleUnit::reverseUnitId).toList();
     }
 }
